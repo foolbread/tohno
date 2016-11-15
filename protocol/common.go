@@ -6,14 +6,17 @@
 package protocol
 
 const (
-	FILE_CONTENT_CREATE = "create"
-	FILE_CONTENT_UPDATE = "update"
-	FILE_CONTENT_DELETE = "delete"
+	FILE_CREATE = "create"
+	FILE_UPDATE = "update"
+	FILE_DELETE = "delete"
+	FILE_GET    = "get"
 )
 
 const (
-	FILE_NAME_CHANGE   = "filename"
-	FILE_BACKUP_CHANGE = "backupcount"
+	DIR_CREATE = "create"
+	DIR_DEL    = "delete"
+	DIR_RENAME = "rename"
+	DIR_SCAN   = "scan"
 )
 
 const (
@@ -24,4 +27,9 @@ const (
 type SyncFilePair struct {
 	IP   string `json:"ip"`
 	File string `json:"file"`
+}
+
+type DirInfoPair struct {
+	Name  string `json:"name"`
+	IsDir bool   `json:"isdir"`
 }

@@ -10,5 +10,5 @@ import (
 )
 
 func InitSync() {
-
+	golog.Info("tohno sync initing......")
 }

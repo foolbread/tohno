@@ -7,6 +7,7 @@ package storage
 
 import (
 	"github.com/foolbread/fbcommon/golog"
+	"github.com/syndtr/goleveldb/leveldb/util"
 )
 
 func InitStorage() {
@@ -15,38 +16,38 @@ func InitStorage() {
 
 var g_leveldb *tohnoLevelDB
 
-const (
-	sync_file_tail      = "-file"
-	sync_zookeeper_tail = "-zk"
-)
-
-func ExistFileInfo(file string) bool {
-	ret, _ := g_leveldb.db.Has([]byte(file), nil)
-
-	return ret
-}
-
-func ExistSyncFileInfo(file string) bool {
-	ret, _ := g_leveldb.db.Has([]byte(file+sync_file_tail), nil)
-
-	return ret
+////////////////////////////////////////////////////////////////
+type DataPair struct {
+	Key  []byte
+	Data []byte
 }
 
 ////////////////////////////////////////////////////////////////
-func GetFileInfo(file string) ([]byte, error) {
-	return g_leveldb.db.Get([]byte(file), nil)
+func GetDataByPrefix(prefix []byte) ([]*DataPair, error) {
+	iter := g_leveldb.db.NewIterator(util.BytesPrefix(prefix), nil)
+	var ret []*DataPair
+	for iter.Next() {
+		ret = append(ret, &DataPair{iter.Key(), iter.Value()})
+	}
+
+	iter.Release()
+
+	return ret, iter.Error()
 }
 
-func GetSyncFileInfo(file string) ([]byte, error) {
-	return g_leveldb.db.Get([]byte(file+sync_file_tail), nil)
+func GetData(key []byte) ([]byte, error) {
+	return g_leveldb.db.Get(key, nil)
 }
 
-////////////////////////////////////////////////////////////////
-
-func PutFileInfo(file string, data []byte) error {
-	return g_leveldb.db.Put([]byte(file), data, nil)
+func PutData(key []byte, data []byte) error {
+	return g_leveldb.db.Put(key, data, nil)
 }
 
-func PutSyncFileInfo(file string, data []byte) error {
-	return g_leveldb.db.Put([]byte(file+sync_zookeeper_tail), data, nil)
+func DeleteData(key []byte) error {
+	return g_leveldb.db.Delete(key, nil)
+}
+
+func ExistData(key []byte) bool {
+	ret, _ := g_leveldb.db.Has(key, nil)
+	return ret
 }

@@ -5,33 +5,68 @@
 */
 package protocol
 
-type FileContentCreate struct {
-	File        string   `json:"file"`
-	Content     string   `json:"content"`
-	BackupCount int      `json:"backupcount"`
-	SyncTypes   []string `json:"synctypes"`
-	SyncInfos   []string `json:"syncinfos"`
+type FileCreateReq struct {
+	File        string       `json:"file"`
+	Content     string       `json:"content"`
+	BackupCount int          `json:"backupcount"`
+	SyncFile    SyncFileType `json:"syncfile"`
 }
 
-type FileContentUpdate struct {
-	File    string `json:"file"`
-	Content string `json:"content"`
+type FileUpdateReq struct {
+	File        string       `json:"file"`
+	Content     string       `json:"content"`
+	BackupCount int          `json:"backupcount"`
+	SyncFile    SyncFileType `json:"syncfile"`
 }
 
-type FileContentDelete struct {
+type FileGetReq struct {
 	File string `json:"file"`
 }
 
-type FileNameChange struct {
-	NewName string `json:"newname"`
-	OldName string `json:"oldname"`
+type FileGetRes struct {
+	File        string       `json:"file"`
+	Content     string       `json:"content"`
+	BackupCount int          `json:"backupcount"`
+	SyncFile    SyncFileType `json:"syncfile"`
 }
 
-type FileBackupChange struct {
-	File        string `json:"file"`
-	BackupCount int    `json:"backupcount"`
+type FileDeleteReq struct {
+	File string `json:"file"`
+}
+
+type FileRenameReq struct {
+	ParentPath string `json:"parentdir"`
+	NewName    string `json:"newname"`
+	OldName    string `json:"oldname"`
+}
+
+type DirCreateReq struct {
+	Dir string `json:"dir"`
+}
+
+type DirDelReq struct {
+	Dir string `json:"dir"`
+}
+
+type DirRenameReq struct {
+	ParentPath string `json:"parentdir"`
+	NewName    string `json:"newname"`
+	OldName    string `json:"oldname"`
+}
+
+type DirScanReq struct {
+	Dir string `json:"dir"`
 }
 
 type SyncFileType struct {
 	Infos []*SyncFilePair `json:"infos"`
+}
+
+type CommonRes struct {
+	Info string `json:"info"`
+}
+
+type DirInfoRes struct {
+	Dir   string `json:"dir"`
+	Infos []*DirInfoPair
 }

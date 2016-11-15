@@ -20,6 +20,11 @@ func InitConfig(file string) {
 	var section string
 	var str string
 
+	section = "server"
+	str = conf.MustString(section, "serveraddr", "")
+	golog.Info(section, "serveraddr:", str)
+	g_conf.setServerAddr(str)
+
 	section = "file"
 	str = conf.MustString(section, "filepath", "")
 	golog.Info(section, "filepath:", str)
@@ -37,8 +42,13 @@ func GetConfig() *tohnoConfig {
 var g_conf *tohnoConfig = new(tohnoConfig)
 
 type tohnoConfig struct {
+	serverAddr     string
 	filePath       string
 	fileBackupPath string
+}
+
+func (c *tohnoConfig) setServerAddr(s string) {
+	c.serverAddr = s
 }
 
 func (c *tohnoConfig) setFilePath(s string) {
@@ -47,6 +57,10 @@ func (c *tohnoConfig) setFilePath(s string) {
 
 func (c *tohnoConfig) setFileBackupPath(s string) {
 	c.fileBackupPath = s
+}
+
+func (c *tohnoConfig) GetServerAddr() string {
+	return c.serverAddr
 }
 
 func (c *tohnoConfig) GetFilePath() string {

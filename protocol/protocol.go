@@ -27,7 +27,19 @@ type FileGetRes struct {
 	File        string       `json:"file"`
 	Content     string       `json:"content"`
 	BackupCount int          `json:"backupcount"`
+	BackupFiles []string     `json:"backupfiles"`
 	SyncFile    SyncFileType `json:"syncfile"`
+}
+
+type FileBackUpGetReq struct {
+	File       string `json:"file"`
+	BackupFile string `json:"backupfile"`
+}
+
+type FileBackUpGetRes struct {
+	File       string `json:"file"`
+	BackupFile string `json:"backupfile"`
+	Content    string `json:"content"`
 }
 
 type FileDeleteReq struct {
@@ -63,7 +75,8 @@ type SyncFileType struct {
 }
 
 type CommonRes struct {
-	Info string `json:"info"`
+	Status int    `json:"status"`
+	Info   string `json:"info"`
 }
 
 type DirInfoRes struct {

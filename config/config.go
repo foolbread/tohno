@@ -33,6 +33,16 @@ func InitConfig(file string) {
 	str = conf.MustString(section, "filebackpath", "")
 	golog.Info(section, "filebackpath:", str)
 	g_conf.setFileBackupPath(str)
+
+	section = "sync"
+	str = conf.MustString(section, "ferry", "")
+	golog.Info(section, "ferry:", str)
+	g_conf.setFerryAddr(str)
+
+	section = "storage"
+	str = conf.MustString(section, "leveldb", "")
+	golog.Info(section, "leveldb:", str)
+	g_conf.setLevelDB(str)
 }
 
 func GetConfig() *tohnoConfig {
@@ -43,12 +53,22 @@ var g_conf *tohnoConfig = new(tohnoConfig)
 
 type tohnoConfig struct {
 	serverAddr     string
+	ferryAddr      string
+	levelDB        string
 	filePath       string
 	fileBackupPath string
 }
 
 func (c *tohnoConfig) setServerAddr(s string) {
 	c.serverAddr = s
+}
+
+func (c *tohnoConfig) setFerryAddr(s string) {
+	c.ferryAddr = s
+}
+
+func (c *tohnoConfig) setLevelDB(s string) {
+	c.levelDB = s
 }
 
 func (c *tohnoConfig) setFilePath(s string) {
@@ -61,6 +81,14 @@ func (c *tohnoConfig) setFileBackupPath(s string) {
 
 func (c *tohnoConfig) GetServerAddr() string {
 	return c.serverAddr
+}
+
+func (c *tohnoConfig) GetFerryAddr() string {
+	return c.ferryAddr
+}
+
+func (c *tohnoConfig) GetLevelDB() string {
+	return c.levelDB
 }
 
 func (c *tohnoConfig) GetFilePath() string {

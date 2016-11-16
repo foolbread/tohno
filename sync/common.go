@@ -12,3 +12,7 @@ import (
 func InitSync() {
 	golog.Info("tohno sync initing......")
 }
+
+func SyncFileByFerry(filepath string, info *SyncFileInfoSet) ([]byte, error) {
+	return nil, nil
+}

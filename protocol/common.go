@@ -6,10 +6,11 @@
 package protocol
 
 const (
-	FILE_CREATE = "create"
-	FILE_UPDATE = "update"
-	FILE_DELETE = "delete"
-	FILE_GET    = "get"
+	FILE_CREATE     = "create"
+	FILE_UPDATE     = "update"
+	FILE_DELETE     = "delete"
+	FILE_GET        = "get"
+	BACKUP_FILE_GET = "backupget"
 )
 
 const (
@@ -17,6 +18,11 @@ const (
 	DIR_DEL    = "delete"
 	DIR_RENAME = "rename"
 	DIR_SCAN   = "scan"
+)
+
+const (
+	ERROR_STATUS = -1
+	OK_STATUS    = 0
 )
 
 const (

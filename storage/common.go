@@ -7,11 +7,18 @@ package storage
 
 import (
 	"github.com/foolbread/fbcommon/golog"
+	"github.com/foolbread/tohno/config"
 	"github.com/syndtr/goleveldb/leveldb/util"
 )
 
 func InitStorage() {
 	golog.Info("tohno storage initing......")
+
+	var err error
+	g_leveldb, err = newTohnoLevelDB(config.GetConfig().GetLevelDB())
+	if err != nil {
+		golog.Critical(err)
+	}
 }
 
 var g_leveldb *tohnoLevelDB
